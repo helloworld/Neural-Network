@@ -124,6 +124,18 @@ def verifyNetwork(epochs, w, v):
         yINT = [ int(i > .5) for i in y]
         print('%5s'%(y == x[:-1]), '-->', yValue(x,w,v), x)
 
+def findError(y, t):
+    E = (0.5*(y[0] - t[0])**2
+        + 0.5*(y[1] - t[1])**2
+        + 0.5*(y[2] - t[2])**
+        + 0.5*(y[3] - t[3])**2
+        + 0.5*(y[4] - t[4])**2
+        + 0.5*(y[5] - t[5])**2
+        + 0.5*(y[6] - t[6])**2
+        + 0.5*(y[7] - t[7])**2)
+        
+    return E
+
 def trainNetwork():
     epochs = 0
     w,v = randomlyAssignWeights()
@@ -132,8 +144,13 @@ def trainNetwork():
         for x in INPUTS:
             dp, h, DP, y = feedForward(x,w,v)
             w, v = backPropogation(x,w,dp,h,v,DP,y)
+        
+        if(epochs % 100 == 0):
+            E = findError(y, x)
+            print(E)
+        
         epochs += 1
-        print('epochs =', epochs)
+        # print('epochs =', epochs)
     return epochs, w, v
 
 from random import random, choice, shuffle, uniform, randint
