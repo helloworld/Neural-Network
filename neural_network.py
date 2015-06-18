@@ -76,6 +76,37 @@ def yValue(x,w,v):
     return y
 
 def backPropogation(x,w,dp,h,v,DP,y):
+    deltas = [(y[k]-x[k])*y[k]*(1-y[k]) for k in range(8)]
+    vIncs = [[0,0,0,0,0,0,0,0] for i in range(4)]
+    wIncs = [[0,0,0] for i in range(9)]
+    
+    # increase v increments
+    for j in range(len(v)):
+        for k in range(len(v[0])):
+            vIncs[j][k] += deltas[j] * h[j]
+    
+    # increase w increments
+    for i in range(len(w)): 
+        for j in range(len(w[0])):
+            wIncs[i][j] += (deltas[0]*v[j][0]
+                            + deltas[1]*v[j][1]
+                            + deltas[2]*v[j][2]
+                            + deltas[3]*v[j][3]
+                            + deltas[4]*v[j][4]
+                            + deltas[5]*v[j][5]
+                            + deltas[6]*v[j][6]
+                            + deltas[7]*v[j][7]) * h[j] * (1-h[j]) * x[i]
+    
+    # change v weights
+    for j in range(len(v)): 
+        for k in range(len(v[0])):
+            v[j][k] -= vIncs[j][k] * ALPHA
+            
+    # change w weights
+    for i in range(len(w)):
+        for j in range(len(w[0])):
+            w[i][j] -= wIncs[i][j] * ALPHA
+    
     return w, v
 
 def trained(w, v):
@@ -118,5 +149,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    
