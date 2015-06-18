@@ -122,7 +122,7 @@ def verifyNetwork(epochs, w, v):
     for x in INPUTS:
         y = yValue(x,w,v)
         yINT = [ int(i > .5) for i in y]
-        print('%5s'%(y == x[:-1]), '-->', yValue(x,w,v), x)
+        print('%5s'%(y == x[:-1]), '-->', yINT, x)
 
 def findError(y, t):
     E = (0.5*(y[0] - t[0])**2
