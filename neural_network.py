@@ -62,15 +62,36 @@ def f(x):
     return 1/(1 + exp(-x))
 
 def feedForward(x,w,v):
-    
+    dp = mult(x, w)
+    h = [f(x) for x in dp] + [-1]
+    DP = mult(h, v)
+    y = [f(x) for x in DP] 
+    return dp, h, DP, y
+
+def yValue(x,w,v):
+    dp = mult(x, w)
+    h = [f(x) for x in dp] + [-1]
+    DP = mult(h, v)
+    y = [f(x) for x in DP] 
+    return y
+
 def backPropogation(x,w,dp,h,v,DP,y):
     return w, v
 
 def trained(w, v):
-    
+    for x in INPUTS:
+        y = yValue(x,w,v)
+        yINT = [ int(i > .5) for i in y]
+        if y != x[:-1]:
+            return False
+    return True
 
 def verifyNetwork(epochs, w, v):
-    
+    print("Epochs =", epochs)
+    for x in INPUTS:
+        y = yValue(x,w,v)
+        yINT = [ int(i > .5) for i in y]
+        print('%5s'%(y == x[:-1]), '-->', yValue(x,w,v), x)
 
 def trainNetwork():
     epochs = 0
@@ -98,3 +119,4 @@ def main():
 if __name__ == '__main__':
     main()
 
+    
