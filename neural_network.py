@@ -75,7 +75,7 @@ def yValue(x,w,v):
     y = [f(x) for x in DP] 
     return y
 
-def backPropogation(x,w,dp,h,v,DP,y):
+def backPropagation(x,w,dp,h,v,DP,y):
     deltas = [(y[k]-x[k])*y[k]*(1-y[k]) for k in range(8)]
     vIncs = [[0,0,0,0,0,0,0,0] for i in range(4)]
     wIncs = [[0,0,0] for i in range(9)]
@@ -143,7 +143,7 @@ def trainNetwork():
     while epochs < TRIALS and not trained(w,v):
         for x in INPUTS:
             dp, h, DP, y = feedForward(x,w,v)
-            w, v = backPropogation(x,w,dp,h,v,DP,y)
+            w, v = backPropagation(x,w,dp,h,v,DP,y)
         
         if(epochs % 100 == 0):
             E = findError(y, x)
