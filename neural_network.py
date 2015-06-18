@@ -83,7 +83,7 @@ def backPropagation(x,w,dp,h,v,DP,y):
     # increase v increments
     for j in range(len(v)):
         for k in range(len(v[0])):
-            vIncs[j][k] += deltas[j] * h[j]
+            vIncs[j][k] += deltas[k] * h[j]
     
     # increase w increments
     for i in range(len(w)): 
