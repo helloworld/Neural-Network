@@ -113,7 +113,7 @@ def trained(w, v):
     for x in INPUTS:
         y = yValue(x,w,v)
         yINT = [ int(i > .5) for i in y]
-        if y != x[:-1]:
+        if yINT != x[:-1]:
             return False
     return True
 
@@ -122,7 +122,7 @@ def verifyNetwork(epochs, w, v):
     for x in INPUTS:
         y = yValue(x,w,v)
         yINT = [ int(i > .5) for i in y]
-        print('%5s'%(y == x[:-1]), '-->', yINT, x)
+        print('%5s'%(yINT == x[:-1]), '-->', yINT, x)
 
 def findError(y, t):
     E = (0.5*(y[0] - t[0])**2
